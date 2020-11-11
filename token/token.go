@@ -25,11 +25,10 @@ type Token struct {
 }
 
 const (
-	ILLEGAL = "ILLEGAL"
-	EOF     = "EOF"
-	IDENT   = "IDENT"
-	INT     = "INT"
-
+	ILLEGAL   = "ILLEGAL"
+	EOF       = "EOF"
+	IDENT     = "IDENT"
+	INT       = "INT"
 	ASSIGN    = "ASSIGN"
 	PLUS      = "+"
 	MINUS     = "-"
@@ -44,14 +43,14 @@ const (
 	RPAREN    = ")"
 	LBRACE    = "{"
 	RBRACE    = "}"
-
-	FUNCTION = "FUNCTION"
-	LET      = "LET"
-	TRUE     = "TRUE"
-	FALSE    = "FALSE"
-	IF       = "IF"
-	ELSE     = "ELSE"
-	RETURN   = "RETURN"
-	EQ       = "=="
-	NOT_EQ   = "!="
+	FUNCTION  = "FUNCTION"
+	LET       = "LET"
+	TRUE      = "TRUE"
+	FALSE     = "FALSE"
+	IF        = "IF"
+	ELSE      = "ELSE"
+	RETURN    = "RETURN"
+	EQ        = "=="
+	NOT_EQ    = "!="
+	STRING    = "STRING"
 )
