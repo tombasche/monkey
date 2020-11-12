@@ -47,8 +47,14 @@ func New(l *lexer.Lexer) *Parser {
 	p.nextToken()
 	p.nextToken()
 
-	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
+	p.registerPrefixFunctions()
+	p.registerInfixFunctions()
 
+	return p
+}
+
+func (p *Parser) registerPrefixFunctions() {
+	p.prefixParseFns = make(map[token.TokenType]prefixParseFn)
 	prefixes := []struct {
 		token    token.TokenType
 		function prefixParseFn
@@ -68,6 +74,9 @@ func New(l *lexer.Lexer) *Parser {
 	for _, prefix := range prefixes {
 		p.registerPrefix(prefix.token, prefix.function)
 	}
+}
+
+func (p *Parser) registerInfixFunctions() {
 	p.infixParseFns = make(map[token.TokenType]infixParseFn)
 	infixes := []struct {
 		token    token.TokenType
@@ -86,8 +95,6 @@ func New(l *lexer.Lexer) *Parser {
 	for _, infix := range infixes {
 		p.registerInfix(infix.token, infix.function)
 	}
-
-	return p
 }
 
 func (p *Parser) parseArrayLiteral() ast.Expression {
