@@ -73,6 +73,7 @@ func (p *Parser) registerPrefixFunctions() {
 		{token.STRING, p.parseStringLiteral},
 		{token.LBRACKET, p.parseArrayLiteral},
 		{token.LBRACE, p.parseHashLiteral},
+		{token.MACRO, p.parseMacroLiteral},
 	}
 	for _, prefix := range prefixes {
 		p.registerPrefix(prefix.token, prefix.function)
@@ -117,6 +118,23 @@ func (p *Parser) parseArrayLiteral() ast.Expression {
 	array := &ast.ArrayLiteral{Token: p.curToken}
 	array.Elements = p.parseExpressionList(token.RBRACKET)
 	return array
+}
+
+func (p *Parser) parseMacroLiteral() ast.Expression {
+	lit := &ast.MacroLiteral{Token: p.curToken}
+
+	if !p.expectPeek(token.LPAREN) {
+		return nil
+	}
+	lit.Parameters = p.parseFunctionParameters()
+	if !p.expectPeek(token.LBRACE) {
+		return nil
+	}
+
+	lit.Body = p.parseBlockStatement()
+
+	return lit
+
 }
 
 func (p *Parser) parseCallExpression(function ast.Expression) ast.Expression {
